@@ -1,0 +1,9 @@
+---
+# from: https://wiki.archlinux.org/title/libvirt
+
+- name: Install libvirt
+  community.general.pacman:
+    name: libvirt
+    state: present
+  notify: start and enable Libvirtd service
+  become: true
