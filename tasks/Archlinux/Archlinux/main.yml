@@ -1,9 +1,49 @@
 ---
-# from: https://wiki.archlinux.org/title/libvirt
+# from: https://www.makeuseof.com/how-to-install-arch-linux-kvm-configure-virtual-machine/
+# https://wiki.archlinux.org/title/libvirt
+
+- name: Install KVM
+  community.general.pacman:
+    name:
+    - qemu-full
+    - virt-manager
+    - virt-viewer
+    - dnsmasq bridge-utils
+    - libguestfs
+    - ebtables
+    - vde2
+    - openbsd-netcat
+    state: present
+  notify: start and enable Libvirtd service
+  become: true
 
 - name: Install libvirt
   community.general.pacman:
     name: libvirt
     state: present
-  notify: start and enable Libvirtd service
+  notify: Start and enable Libvirtd service
   become: true
+  when: false
+
+- name: Config unix_sock_group
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/libvirtd.conf
+    regexp: '^# unix_sock_group'
+    line: 'unix_sock_group = "libvirt"'
+  become: true
+  notify: Restart libvirtd.service
+
+- name: Config unix_sock_rw_perms
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/libvirtd.conf
+    regexp: '^# unix_sock_rw_perms'
+    line: 'unix_sock_rw_perms = "0770"'
+  become: true
+  notify: Restart libvirtd.service
+
+- name: Add user to group libvirt
+  ansible.builtin.user:
+    name: "{{ ansible_env.USER }}"
+    groups: libvirt
+    append: yes
+  notify: Restart libvirtd.service
