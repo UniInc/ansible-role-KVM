@@ -6,6 +6,6 @@
     - bridge-utils
     - libvirt-clients
     - libvirt-daemon
-    - qemu
+    - qemu-system
     - qemu-kvm
   become: true
