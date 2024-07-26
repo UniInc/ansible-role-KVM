@@ -1,0 +1,11 @@
+---
+# https://ubuntu.com/blog/kvm-hyphervisor
+- name: Install KVM
+  ansible.builtin.apt:
+    pkg:
+    - bridge-utils
+    - libvirt-clients
+    - libvirt-daemon
+    - qemu
+    - qemu-kvm
+  become: true
