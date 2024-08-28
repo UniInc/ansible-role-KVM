@@ -1,0 +1,12 @@
+- name: Install KVM on Kali
+  ansible.builtin.apt:
+    pkg:
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-daemon
+      - virtinst
+      - bridge-utils
+      - libosinfo-bin
+  become: true
+
+# from: https://www.server-world.info/en/note?os=Debian_12&p=kvm&f=1

@@ -1,2 +1,3 @@
----
-# defaults file for Libvirt
+# Fedora
+optional_packages: false
+virt_manager: true

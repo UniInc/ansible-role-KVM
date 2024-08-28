@@ -1,2 +1,1 @@
-- name: OS specific
-  include_tasks: "{{ ansible_distribution }}/main.yml"
+- include_tasks: '{{ ansible_distribution }}/main.yml'

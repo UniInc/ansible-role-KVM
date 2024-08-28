@@ -1,0 +1,21 @@
+- name: Install core KVM packages
+  community.general.rpm_ostree_pkg:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - virt-install
+  - virt-viewer
+  - libvirt
+  notify:
+  - Reboot
+  become: true
+
+- name: Has to reboot to see libvirtd!
+  meta: flush_handlers
+
+- name: start the libvirtd service
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+  become: true

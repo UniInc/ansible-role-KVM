@@ -1,2 +1,1 @@
----
-# vars file for Libvirt
+debian_arch: "{{'-x86' if ansible_architecture == 'x86_64'}}"

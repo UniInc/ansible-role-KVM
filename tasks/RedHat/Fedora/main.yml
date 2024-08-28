@@ -1,15 +1,17 @@
-# Fedora Flavor
-- name: test Silverblue 0
-  command: which rpm-ostree
-  register: rpm_ostree_exists
-  changed_when: false
-  failed_when: false
+- name: Install core
+  ansible.builtin.dnf:
+    name: "@virtualization"
+    state: present
+  become: true
+  when: not optional_packages
+  notify: start the libvirtd service
 
-- name: Silverblue specific tasks
-  ansible.builtin.include_tasks: rpm-ostree.yml
-  when: rpm_ostree_exists.rc == 0
 
-- name: not Silverblue
-  include_tasks:
-    file: rpm.yml
-  when: rpm_ostree_exists.rc != 0
+# Fix: https://github.com/ansible/ansible/issues/67187
+- name: Install all
+  ansible.builtin.shell: dnf group install --with-optional virtualization -y
+  args:
+    creates: somelog.txt
+  become: true
+  when: optional_packages
+  notify: start the libvirtd service

@@ -1,0 +1,16 @@
+- name: Reboot node
+  ansible.builtin.reboot:
+  when: not ansible_connection == 'local'
+  become: true
+
+- name: End local
+  ansible.builtin.meta: end_host
+  when: not ansible_connection == 'local'
+
+- name: Reboot
+  debug:
+    msg: "{{'You must reboot manually! As you are setting up localhost' if ansible_connection == 'local' else 'Rebooting ...' }}"
+  changed_when: true
+  notify:
+  - Reboot node
+  - End local
