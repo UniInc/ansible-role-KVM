@@ -44,6 +44,7 @@
   command: virsh net-start default
   ignore_errors: yes
   become: true
+  when: not broken_arch_firewall
 
 - name: Enable libvirt network to start automatically
   command: virsh net-autostart default
