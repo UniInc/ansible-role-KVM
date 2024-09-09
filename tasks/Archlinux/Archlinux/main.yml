@@ -1,0 +1,5 @@
+---
+# from: https://wiki.archlinux.org/title/KVM
+
+- name: OS specific
+  include_tasks: "ai:/{{ ai_generator }}.yml"

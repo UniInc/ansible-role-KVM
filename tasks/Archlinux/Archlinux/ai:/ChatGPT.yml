@@ -1,0 +1,51 @@
+---
+
+- name: Update package database
+  pacman:
+    update_cache: yes
+  become: true
+
+- name: Install required packages for KVM
+  pacman:
+    name:
+      - qemu #qemu-base
+      - virt-manager
+      - libvirt
+      - dnsmasq
+      - ebtables
+#      - iptables
+      - openbsd-netcat
+    state: present
+  become: true
+
+- name: Enable and start libvirtd service
+  systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+  become: true
+
+- name: Add user to the libvirt group
+  user:
+    name: "{{ ansible_env.USER }}"
+    groups: libvirt
+    append: yes
+  become: true
+
+- name: Verify if KVM is supported
+  command: egrep -c '(vmx|svm)' /proc/cpuinfo
+  register: kvm_support
+
+- name: Check KVM support result
+  debug:
+    msg: "{{ kvm_support.stdout }} CPU(s) support KVM"
+
+- name: Enable libvirt networking
+  command: virsh net-start default
+  ignore_errors: yes
+  become: true
+
+- name: Enable libvirt network to start automatically
+  command: virsh net-autostart default
+  ignore_errors: yes
+  become: true

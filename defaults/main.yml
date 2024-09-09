@@ -1,3 +1,5 @@
 # Fedora
 optional_packages: false
 virt_manager: true
+
+ai_generator: ChatGPT
