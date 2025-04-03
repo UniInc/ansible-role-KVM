@@ -2,4 +2,5 @@
 optional_packages: false
 virt_manager: true
 
+use_ai: false
 ai_generator: ChatGPT

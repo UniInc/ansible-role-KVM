@@ -4,3 +4,7 @@
     state: started
     enabled: true
   become: true
+
+- name: Pacman update cache
+  community.general.pacman:
+    update_cache: true
