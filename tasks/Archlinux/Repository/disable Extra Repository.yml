@@ -1,0 +1,35 @@
+---
+
+- name: Disable Extra Repository - 0
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    after: '\[extra\]'
+    regexp: '^SigLevel'
+    replace: '#SigLevel'
+  become: true
+
+- name: Disable Extra Repository - 1
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    after: '\[extra\]'
+    regexp: '^Include'
+    replace: '#Include'
+  become: true
+  notify: Pacman update cache
+
+- name: Disable Extra Repository - 2
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '^\[extra\]'
+    replace: '#[extra]'
+  become: true
+  notify: Pacman update cache
+
+
+- name: Pickup changes to repositories
+  ansible.builtin.meta: flush_handlers
+
+
+- name: test end_play
+  ansible.builtin.meta: end_play
+  when: debug_end
