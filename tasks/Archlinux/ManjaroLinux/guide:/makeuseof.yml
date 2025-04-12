@@ -66,3 +66,10 @@
     state: started
     enabled: true
   become: true
+
+- name: Enable virtlogd Service
+  ansible.builtin.systemd_service:
+    name: virtlogd.service
+    state: started
+    enabled: true
+  become: true
