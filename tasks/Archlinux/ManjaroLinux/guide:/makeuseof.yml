@@ -11,8 +11,12 @@
     update_cache: true
   become: true
 
-- name: Install Qemu
-  include_tasks: Archlinux/Qemu by architecture/main.yml
+# Important: Fixes problems later
+- name: Run equivalent of "pacman -Syu" - This fixes most problems!
+  community.general.pacman:
+    update_cache: true
+    upgrade: true
+  become: true
 
 - name: use Ebtables
   include_tasks: Archlinux/Ebtables/main.yml
@@ -21,7 +25,7 @@
 - name: Install package
   community.general.pacman:
     name:
-      # - qemu-full # Not available in Manjaro!
+      - qemu-full
       - virt-manager
       - virt-viewer
       - dnsmasq
@@ -63,13 +67,6 @@
 - name: Enable libvirtd Service
   ansible.builtin.systemd_service:
     name: libvirtd.service
-    state: started
-    enabled: true
-  become: true
-
-- name: Enable virtlogd Service
-  ansible.builtin.systemd_service:
-    name: virtlogd.service
     state: started
     enabled: true
   become: true
