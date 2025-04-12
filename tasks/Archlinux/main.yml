@@ -1,4 +1,11 @@
 ---
 
 - name: OS specific
-  include_tasks: "{{ ansible_distribution }}/{{ ansible_distribution }}/main.yml"
+  include_tasks: "{{ ansible_distribution }}/{{ ansible_lsb.id }}/main.yml"
+
+  # Not needed:
+  # when: ansible_lsb.id == "ManjaroLinux"
+
+# - name: OS specific, except Manjaro
+#   include_tasks: "{{ ansible_distribution }}/{{ ansible_distribution }}/main.yml"
+#   when: ansible_lsb.id != "ManjaroLinux"

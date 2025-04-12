@@ -4,25 +4,24 @@
   debug:
     msg: "Install from Guide!"
 
-# Comment out Extra Repository: https://itsfoss.com/arch-linux-repos/
-- name: Disable Extra Repository
-  include_tasks: Archlinux/Repository/disable Extra Repository.yml
-
-- name: Install ebtables - from Core Repository
+- name: Update Cache
   community.general.pacman:
-    name:
-      -  ebtables
-    state: present
+    # name: foo
+    # state: latest
+    update_cache: true
   become: true
 
-- name: Enable Extra Repository
-  include_tasks: Archlinux/Repository/enable Extra Repository.yml
+- name: Install Qemu
+  include_tasks: Archlinux/Qemu by architecture/main.yml
 
+- name: use Ebtables
+  include_tasks: Archlinux/Ebtables/main.yml
+  when: arch_use_ebtables
 
 - name: Install package
   community.general.pacman:
     name:
-      - qemu-full
+      # - qemu-full # Not available in Manjaro!
       - virt-manager
       - virt-viewer
       - dnsmasq

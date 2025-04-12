@@ -8,3 +8,4 @@
 - name: Pacman update cache
   community.general.pacman:
     update_cache: true
+  become: true

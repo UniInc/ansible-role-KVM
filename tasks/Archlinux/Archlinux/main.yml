@@ -5,7 +5,3 @@
 - name: AI generated
   include_tasks: "ai:/{{ ai_generator }}.yml"
   when: use_ai
-
-- name: Guide
-  include_tasks: "guide:/makeuseof.yml"
-  when: not use_ai

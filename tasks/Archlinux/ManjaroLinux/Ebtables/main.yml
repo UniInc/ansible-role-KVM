@@ -1,0 +1,23 @@
+---
+# Comment out Extra Repository: https://itsfoss.com/arch-linux-repos/
+- name: Disable Extra Repository
+  include_tasks: Archlinux/Ebtables/disable Extra Repository.yml
+  when: arch_disable_extra_repo
+
+- name: Remove iptables because it conflicts with iptables-nft -(from)-> ebtables
+  community.general.pacman:
+    name:
+      -  iptables
+    state: absent
+  become: true
+
+- name: Install ebtables - from Core Repository
+  community.general.pacman:
+    name:
+      -  ebtables
+    state: present
+  become: true
+
+- name: Enable Extra Repository
+  include_tasks: Archlinux/Ebtables/enable Extra Repository.yml
+  when: arch_disable_extra_repo

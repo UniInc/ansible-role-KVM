@@ -1,0 +1,14 @@
+---
+- name: arch x86_64
+  community.general.pacman:
+    name:
+      - qemu-system-x86
+  become: true
+  when: ansible_architecture == "x86_64"
+
+- name: arch aarch64
+  community.general.pacman:
+    name:
+      - qemu-system-aarch64
+  become: true
+  when: ansible_architecture == "aarch64"

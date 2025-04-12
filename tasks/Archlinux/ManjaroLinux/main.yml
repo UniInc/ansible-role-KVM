@@ -1,0 +1,4 @@
+---
+- name: Guide
+  include_tasks: "guide:/makeuseof.yml"
+  when: not use_ai
