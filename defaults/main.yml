@@ -4,3 +4,9 @@ virt_manager: true
 
 use_ai: false
 ai_generator: ChatGPT
+
+debug_end_play: false
+
+# Arch Linux
+arch_use_ebtables: false
+arch_disable_extra_repo: false

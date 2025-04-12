@@ -32,4 +32,4 @@
 
 - name: test end_play
   ansible.builtin.meta: end_play
-  when: debug_end
+  when: debug_end_play
