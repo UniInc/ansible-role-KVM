@@ -33,6 +33,7 @@
       - libguestfs
       - vde2
       - openbsd-netcat
+      - swtpm  # add TPM for OS: Windows 11
     state: present
   become: true
 
